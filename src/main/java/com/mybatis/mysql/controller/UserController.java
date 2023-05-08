@@ -1,14 +1,17 @@
 package com.mybatis.mysql.controller;
 
-import com.mybatis.mysql.dto.GetUserAndBookDetails;
+import com.mybatis.mysql.dto.GetUserByEmailId;
 import com.mybatis.mysql.dto.GetUsersDetails;
 import com.mybatis.mysql.entity.User;
 import com.mybatis.mysql.response.APIResponseModel;
 import com.mybatis.mysql.repository.UserRepository;
+import com.mybatis.mysql.utils.PasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 
 @RestController
@@ -41,15 +44,23 @@ public class UserController {
         }
     }
 
-    // Create User
+    // Register User
     @PostMapping("")
-    public APIResponseModel<?> insertUserData(@RequestBody User user) {
+    public APIResponseModel<?> insertUserData(@RequestBody User user) throws
+            NoSuchAlgorithmException, InvalidKeySpecException {
         APIResponseModel<User> response = new APIResponseModel<>();
-        Integer insert = userRepository.insertUserData(user);
-        if (insert!=0) {
-            response.SetJSONResponse("User created successfully", HttpStatus.CREATED);
-        } else {
-            response.SetJSONResponse("User created failed", HttpStatus.INTERNAL_SERVER_ERROR);
+        PasswordGenerator pg = new PasswordGenerator();
+        GetUserByEmailId checkEmail = userRepository.getTotalUserByEmailId(user.getEmailId());
+        if(checkEmail.getTotal()!=0){
+            response.SetJSONResponse("email id already existed !", HttpStatus.UNPROCESSABLE_ENTITY);
+        } else{
+            user.setPassword(pg.PBKDF2HashPassword(user.getPassword()));
+            Integer insert = userRepository.insertUserData(user);
+            if (insert!=0) {
+                response.SetJSONResponse("User created successfully", HttpStatus.CREATED);
+            } else {
+                response.SetJSONResponse("User created failed", HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
         return response;
     }
