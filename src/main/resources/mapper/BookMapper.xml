@@ -13,4 +13,3 @@
         SELECT * FROM books
     </select>
 </mapper>
-

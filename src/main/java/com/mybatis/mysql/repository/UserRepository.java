@@ -1,17 +1,23 @@
 package com.mybatis.mysql.repository;
 
-import com.mybatis.mysql.model.User;
+import com.mybatis.mysql.config.MySQLConnMapper;
+import com.mybatis.mysql.dto.GetUserAndBookDetails;
+import com.mybatis.mysql.dto.GetUsersDetails;
+import com.mybatis.mysql.entity.User;
 
 import java.util.List;
 
+@MySQLConnMapper("MysqlUserRepository")
 public interface UserRepository {
-    List<User> findAll();
 
-    User findById(Integer id);
+    // Get Repository
+    List<GetUsersDetails> getUsersDetails();
+    GetUsersDetails getUserDetailsById(Integer id);
+    GetUserAndBookDetails getUserAndBookDetailsById(Integer id);
 
-    int deleteById(Integer id);
+    Integer deleteUserById(Integer id);
 
-    int insert(User user);
+    Integer insertUserData(User user);
 
-    int update(User user);
+    Integer updateUserData(User user);
 }
