@@ -1,10 +1,16 @@
-package com.mybatis.mysql.model;
+package com.mybatis.mysql.entity;
+
+import com.mybatis.mysql.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class User {
+
     private Integer id;
     private String firstName;
     private String lastName;
     private String emailId;
+
+    private Integer bookId;
 
     public User(Integer id, String firstName, String lastName, String emailId) {
         super();
@@ -45,4 +51,13 @@ public class User {
     public void setEmailId(String emailId) {
         this.emailId = emailId;
     }
+
+    public Integer getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(Integer bookId) {
+        this.bookId = bookId;
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.mybatis.mysql.model;
+package com.mybatis.mysql.entity;
 
 public class Book {
     private Integer id;
