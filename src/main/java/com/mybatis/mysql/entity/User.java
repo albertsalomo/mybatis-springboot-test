@@ -10,14 +10,18 @@ public class User {
     private String lastName;
     private String emailId;
 
+    private String password;
     private Integer bookId;
 
-    public User(Integer id, String firstName, String lastName, String emailId) {
+    public User(Integer id, String firstName, String lastName,
+                String emailId, String password, Integer bookId) {
         super();
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailId = emailId;
+        this.password = password;
+        this.bookId = bookId;
     }
 
     public Integer getId() {
@@ -50,6 +54,14 @@ public class User {
 
     public void setEmailId(String emailId) {
         this.emailId = emailId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Integer getBookId() {

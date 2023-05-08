@@ -24,10 +24,17 @@
             WHERE u.id = #{id}
     </select>
 
+    <select id="getTotalUserByEmailId" parameterType="user"
+            resultType="com.mybatis.mysql.dto.GetUserByEmailId">
+        SELECT COUNT(u.id) total
+        FROM users u
+        WHERE u.email_id = #{emailId}
+    </select>
+
     <insert id="insertUserData" parameterType="user"
             keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO users(first_name, last_name, email_id, book_id)
-        VALUES(#{firstName}, #{lastName}, #{emailId}, #{bookId})
+        INSERT INTO users(first_name, last_name, email_id, password, book_id)
+        VALUES(#{firstName}, #{lastName}, #{emailId}, #{password}, #{bookId})
     </insert>
 
     <update id="updateUserData" parameterType="user">
